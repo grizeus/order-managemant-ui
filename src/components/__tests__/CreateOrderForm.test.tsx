@@ -1,8 +1,10 @@
+import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { BrowserRouter as Router } from "react-router";
+import { BrowserRouter } from "react-router";
 import { CreateOrderForm } from "../CreateOrderForm";
 import { orderApi } from "../../api/orderApi";
+import "@testing-library/jest-dom";
 
 // Mock the orderApi
 vi.mock("../../api/orderApi", () => ({
@@ -27,9 +29,9 @@ describe("CreateOrderForm", () => {
 
   const renderComponent = (props = {}) => {
     return render(
-      <Router>
+      <BrowserRouter>
         <CreateOrderForm {...defaultProps} {...props} />
-      </Router>
+      </BrowserRouter>
     );
   };
 

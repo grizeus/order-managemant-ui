@@ -1,17 +1,18 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { BrowserRouter as Router } from "react-router";
+import { BrowserRouter } from "react-router";
 import Container from "../Container";
 
 describe("Container", () => {
   it("renders children correctly", () => {
     const testText = "Test Content";
     render(
-      <Router>
+      <BrowserRouter>
         <Container>
           <div>{testText}</div>
         </Container>
-      </Router>
+      </BrowserRouter>
     );
 
     expect(screen.getByText(testText)).toBeInTheDocument();
@@ -19,11 +20,11 @@ describe("Container", () => {
 
   it("applies correct CSS classes", () => {
     const { container } = render(
-      <Router>
+      <BrowserRouter>
         <Container>
           <div>Test</div>
         </Container>
-      </Router>
+      </BrowserRouter>
     );
 
     const containerElement = container.firstElementChild;
