@@ -1,69 +1,110 @@
-# React + TypeScript + Vite
+# Order Management UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend for the Order Management System, built with Vite,
+TypeScript, and Clerk for authentication.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (v22 or later)
+- npm (v10 or later) or bun
+- Backend API (see
+  [backend setup](https://github.com/grizeus/order-management-api))
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clone the repository
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/grizeus/order-managemant-ui.git
+cd order-managemant-ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# or
+bun install
 ```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+VITE_API_URL=http://localhost:3000
+VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+```
+
+### 4. Start the Development Server
+
+```bash
+npm run dev
+# or
+bun dev
+```
+
+The application will be available at
+[http://localhost:5173](http://localhost:5173)
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build locally
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
+
+## Project Structure
+
+```
+src/
+├── api/                # API service layer
+├── components/         # Reusable UI components
+├── pages/             # Application pages
+│   ├── Dashboard.tsx  # Main dashboard
+│   ├── SignInPage.tsx # Sign in page
+│   └── SignUpPage.tsx # Sign up page
+├── routes/            # Application routes
+└── App.tsx            # Main application component
+```
+
+## Environment Variables
+
+| Variable                     | Description                              | Required | Default |
+| ---------------------------- | ---------------------------------------- | -------- | ------- |
+| `VITE_API_URL`               | Backend API URL                          | Yes      | -       |
+| `VITE_CLERK_PUBLISHABLE_KEY` | Clerk publishable key for authentication | Yes      | -       |
+
+## Testing
+
+```bash
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm test -- --watch
+```
+
+## Deployment
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+This will create a `dist` directory with the production build. You can then
+deploy the contents of this directory to any static hosting service like Vercel,
+Netlify, or GitHub Pages.
+
+## Technologies Used
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Clerk (Authentication)
+- React Router
+- React Hook Form
+- Zod (Schema validation)

@@ -8,7 +8,7 @@ import type { OrderFormData } from "../types";
 const orderFormSchema = z.object({
   userId: z.uuidv4("Please enter a valid user ID"),
   productId: z.uuidv4("Please enter a valid product ID"),
-  quantity: z.number().int().positive("Quantity must be at least 1"),
+  quantity: z.number("Please enter a number").int().positive("Quantity must be at least 1"),
 });
 
 type OrderFormSchema = z.infer<typeof orderFormSchema>;
@@ -53,7 +53,11 @@ export const CreateOrderForm = ({
     setSuccessMessage(null);
 
     try {
-      await orderApi.createOrder(data);
+      await orderApi.createOrder({
+        userId: data.userId,
+        productId: data.productId,
+        quantity: Number(data.quantity),
+      });
       setSuccessMessage("Order created successfully!");
       reset();
       onOrderCreated?.();
@@ -98,6 +102,11 @@ export const CreateOrderForm = ({
             className="focus:border-gainsboro focus:ring-gainsboro mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none"
             placeholder="Enter user ID"
           />
+          {errors.userId && (
+            <p className="mt-1 text-sm text-red-600">
+              {errors.userId.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -130,7 +139,7 @@ export const CreateOrderForm = ({
             id="quantity"
             type="number"
             min="1"
-            {...register("quantity", { valueAsNumber: true })}
+            {...register("quantity")}
             className="focus:border-gainsboro focus:ring-gainsboro mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm focus:outline-none"
           />
           {errors.quantity && (
@@ -144,7 +153,7 @@ export const CreateOrderForm = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`bg-royal flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium transition-colors duration-300 ease-in-out text-white shadow-sm hover:bg-royal/80 focus:ring-2 focus:ring-royal/80 focus:ring-offset-2 focus:outline-none ${isSubmitting ? "cursor-not-allowed opacity-70" : ""}`}>
+            className={`bg-royal hover:bg-royal/80 focus:ring-royal/80 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none ${isSubmitting ? "cursor-not-allowed opacity-70" : ""}`}>
             {isSubmitting ? "Submitting..." : "Submit Order"}
           </button>
         </div>
